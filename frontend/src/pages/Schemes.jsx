@@ -1,30 +1,16 @@
 import Navbar from "../components/Navbar";
 
-import {
-  useEffect,
-  useState,
-} from "react";
-
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Schemes() {
 
-  const navigate =
-    useNavigate();
-
-  const [schemes,
-    setSchemes] =
+  const [schemes, setSchemes] =
     useState([]);
-
-
-
 
   useEffect(() => {
 
     fetch(
-      "http://localhost:5000/api/schemes"
+      `${import.meta.env.VITE_API_URL}/api/schemes`
     )
 
       .then((response) =>
@@ -34,31 +20,27 @@ function Schemes() {
       .then((data) => {
 
         setSchemes(data);
+
       })
 
       .catch((error) => {
 
         console.log(error);
+
       });
 
   }, []);
 
-
-
-
   return (
+
     <>
       <Navbar />
 
-
-
       <div className="results-container">
 
-        <h1 className="results-heading">
+        <h1>
           Government Schemes
         </h1>
-
-
 
         <div className="results-grid">
 
@@ -69,93 +51,25 @@ function Schemes() {
               key={scheme._id}
             >
 
-              <div className="card-top">
-
-                <span className="scheme-badge">
-                  {
-                    scheme.schemeType
-                  }
-                </span>
-
-              </div>
-
-
-
               <h2>
                 {scheme.title}
               </h2>
 
-
-
               <p>
-                {
-                  scheme.description
-                }
+                Category:
+                {" "}
+                {scheme.category}
               </p>
 
+              <p>
+                State:
+                {" "}
+                {scheme.state}
+              </p>
 
-
-              <div className="scheme-info">
-
-                <p>
-                  <strong>
-                    Category:
-                  </strong>
-
-                  {" "}
-
-                  {
-                    scheme.category
-                  }
-                </p>
-
-
-
-                <p>
-                  <strong>
-                    State:
-                  </strong>
-
-                  {" "}
-
-                  {
-                    scheme.state
-                  }
-                </p>
-
-
-
-                <p>
-                  <strong>
-                    Department:
-                  </strong>
-
-                  {" "}
-
-                  {
-                    scheme.department
-                  }
-                </p>
-
-              </div>
-
-
-
-              <div className="card-buttons">
-
-                <button
-                  className="details-btn"
-
-                  onClick={() =>
-                    navigate(
-                      `/scheme/${scheme._id}`
-                    )
-                  }
-                >
-                  View Details
-                </button>
-
-              </div>
+              <button>
+                View Details
+              </button>
 
             </div>
 
@@ -165,6 +79,7 @@ function Schemes() {
 
       </div>
     </>
+
   );
 }
 
