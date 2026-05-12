@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 
 const cors = require("cors");
@@ -8,22 +10,44 @@ const schemeRoutes = require("./routes/schemes");
 
 const app = express();
 
+
+
 connectDB();
+
+
 
 app.use(cors());
 
 app.use(express.json());
 
+
+
 app.get("/", (req, res) => {
-  res.send("SchemeSetu Backend Running");
+
+  res.send(
+    "SchemeSetu Backend Running"
+  );
+
 });
 
-app.use("/api/schemes", schemeRoutes);
 
-const PORT = 5000;
+
+app.use(
+  "/api/schemes",
+  schemeRoutes
+);
+
+
+
+const PORT =
+  process.env.PORT || 5000;
+
+
 
 app.listen(PORT, () => {
+
   console.log(
     `Server running on port ${PORT}`
   );
+
 });
